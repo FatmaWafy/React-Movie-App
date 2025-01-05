@@ -4,7 +4,10 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
   return (
-    <nav className='navbar navbar-expand-lg navbar-light bg-warning'>
+    <nav
+      className='navbar navbar-expand-lg navbar-light'
+      style={{ backgroundColor: "#ffd700" }}
+    >
       <div className='container'>
         <Link className='navbar-brand' to='/'>
           Movie App
