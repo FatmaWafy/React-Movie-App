@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import config from "../apis/config";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleFavorite } from "../store/favoritesSlice";
 
 const MoviesList = () => {
   const [movies, setMovies] = useState([]);
@@ -49,6 +51,13 @@ const MoviesList = () => {
     setNoData(false);
   };
 
+  const dispatch = useDispatch();
+  const favorites = useSelector((state) => state.favorites);
+
+  const isFavorite = (movie) => {
+    return favorites.some((fav) => fav.id === movie.id);
+  };
+
   const moviesToDisplay = searchResults.length
     ? searchResults
     : movies.slice(
@@ -67,63 +76,83 @@ const MoviesList = () => {
 
   return (
     <div className='container'>
-      <h2 className='mt-4'>Popular Movies</h2>
-
-      {/* search */}
-      <div className='mb-4'>
-        <input
-          type='text'
-          className='form-control'
-          placeholder='Search for movies...'
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <div className='mt-2'>
-          <button className='btn btn-primary me-2' onClick={handleSearch}>
-            Search
-          </button>
-          {searchQuery.trim() && (
-            <button className='btn btn-secondary' onClick={handleReset}>
-              Reset
+      <div className='search-box'>
+        <h1>Welcome To Our Movie App</h1>
+        <p>Millions of movies, TV shows and people to discove. Explore Now</p>
+        {/* search */}
+        <div
+          className='mb-4'
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-center",
+            gap: "15px",
+          }}
+        >
+          <input
+            type='text'
+            className='form-control'
+            placeholder='Search for movies...'
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <div>
+            <button className='btn search' onClick={handleSearch}>
+              Search
             </button>
-          )}
+            {searchQuery.trim() && (
+              <button className='btn btn-secondary' onClick={handleReset}>
+                Reset
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
       {/* no data */}
       {noData && <p className='text-danger'>No Data Found</p>}
 
+      <h2 className='mt-4'>Popular Movies</h2>
       {/* movies */}
       <div className='row'>
         {moviesToDisplay.map((movie) => (
           <div className='col-md-3 mb-4' key={movie.id}>
-            <div className='card' style={{ height: "600px" }}>
-              <img
-                src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-                className='card-img-top'
-                alt={movie.title}
-              />
-              <div className='card-body'>
-                <h5 className='card-title' style={{ fontSize: "15px" }}>
-                  {movie.title}{" "}
-                </h5>
-                <p className='card-text' style={{ fontSize: "12px" }}>
-                  Release Date: {movie.release_date}
-                </p>
-                <Link
-                  to={`/movie/${movie.id}`}
-                  className='btn'
-                  style={{
-                    padding: "4px 30px",
-                    color: "white",
-                    fontSize: "15px",
-                    backgroundColor: "#ffe353",
-                    position: "absolute",
-                    bottom: "15px",
-                  }}
+            <div className='card'>
+              <Link to={`/movie/${movie.id}`}>
+                <img
+                  src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                  className='card-img-top'
+                  alt={movie.title}
+                />
+              </Link>
+              <div
+                className='card-body'
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  height: "90px",
+                }}
+              >
+                <div>
+                  <h5 className='card-title' style={{ fontSize: "15px" }}>
+                    {movie.title}{" "}
+                  </h5>
+                  <p className='card-text' style={{ fontSize: "12px" }}>
+                    Release Date: {movie.release_date}
+                  </p>
+                </div>
+
+                <button
+                  className='btn favorite-icon transation'
+                  onClick={() => dispatch(toggleFavorite(movie))}
                 >
-                  View Details
-                </Link>
+                  <i
+                    className={
+                      isFavorite(movie) ? "fas fa-heart" : "far fa-heart"
+                    }
+                  ></i>
+                </button>
               </div>
             </div>
           </div>
