@@ -3,6 +3,7 @@ import config from "../apis/config";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleFavorite } from "../store/favoritesSlice";
+import { useLanguage } from "../context/LanguageContext";
 
 const MoviesList = () => {
   const [movies, setMovies] = useState([]);
@@ -12,10 +13,14 @@ const MoviesList = () => {
   const [noData, setNoData] = useState(false);
   const moviesPerPage = 8;
 
+  const { language } = useLanguage();
+
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const response = await config.get("/movie/popular");
+        const response = await config.get(
+          `/movie/popular?language=${language}`
+        );
         setMovies(response.data.results);
       } catch (error) {
         console.error("Error fetching movies:", error);
@@ -23,7 +28,7 @@ const MoviesList = () => {
     };
 
     fetchMovies();
-  }, []);
+  }, [language]);
 
   const handleSearch = async () => {
     if (!searchQuery.trim()) {

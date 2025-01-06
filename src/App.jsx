@@ -1,12 +1,14 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useState } from "react";
 import Navbar from "./components/Navbar";
-import Favorites from "./components/Favorites";
-import MoviesList from "./pages/MoviesList";
-import MovieDetails from "./pages/MovieDetails";
-import Watchlist from "./pages/Watchlist";
-import NotFound from "./pages/NotFound";
 import RegisterForm from "./pages/RegisterForm";
+import { LanguageProvider } from "./context/LanguageContext";
+import { useState, Suspense, lazy } from "react";
+
+const Favorites = lazy(() => import("./components/Favorites"));
+const MoviesList = lazy(() => import("./pages/MoviesList"));
+const MovieDetails = lazy(() => import("./pages/MovieDetails"));
+const Watchlist = lazy(() => import("./pages/Watchlist"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -16,23 +18,25 @@ function App() {
   };
 
   return (
-    <>
+    <LanguageProvider>
       {isLoggedIn ? (
         <Router>
           <Navbar />
-          <Routes>
-            <Route path='/' element={<MoviesList />} />
-            <Route path='/movie/:id' element={<MovieDetails />} />
-            <Route path='/RegisterForm' element={<RegisterForm />} />
-            <Route path='/watchlist' element={<Watchlist />} />
-            <Route path='/favorites' element={<Favorites />} />
-            <Route path='*' element={<NotFound />} />
-          </Routes>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Routes>
+              <Route path='/' element={<MoviesList />} />
+              <Route path='/movie/:id' element={<MovieDetails />} />
+              <Route path='/RegisterForm' element={<RegisterForm />} />
+              <Route path='/watchlist' element={<Watchlist />} />
+              <Route path='/favorites' element={<Favorites />} />
+              <Route path='*' element={<NotFound />} />
+            </Routes>
+          </Suspense>
         </Router>
       ) : (
         <RegisterForm onLogin={handleLogin} />
       )}
-    </>
+    </LanguageProvider>
   );
 }
 

@@ -1,4 +1,4 @@
-# React
+# Lab-3
 
 Search Feature:
 
@@ -37,3 +37,20 @@ Remove movies from favorites.
 State Management:
 
 Used Redux Toolkit to manage state across the entire application.
+
+# Lab-5
+
+Features Added:
+Language Dropdown:
+
+A dropdown in the navbar allows users to switch between two languages: English and Arabic.
+The selected language is stored globally using Context API.
+Changing the language:
+Updates the app's direction:
+Adjusts the movie data fetched to match the selected language.
+
+React.lazy and Suspense:
+Implemented lazy loading for all pages to enhance performance.
+Pages are only loaded when the user navigates to them, reducing the initial load time of the app.
+Fallback Component:
+While a page is loading, a simple Loading... message is displayed for a better user experience.
