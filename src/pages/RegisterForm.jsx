@@ -1,7 +1,47 @@
 /* eslint-disable */
 import React, { useState } from "react";
+import styled from "styled-components";
+
+
+const Container = styled.div`
+  width: 100%;
+  height: 88vh;
+  background-image: url("/pexels-photo-7103103.webp");
+  background-size: cover;
+  background-position: center;
+`;
+
+const ContainerOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+`;
+
+const Form = styled.form`
+  max-width: 100%;
+  width: 358px;
+  height: 80%;
+  margin-top: 40px;
+  padding: 30px;
+  background:rgba(255, 217, 0, 0.77);
+  border-radius: 10px;
+  position: absolute;
+  top: 50%;
+  right: 0px;
+  transform: translate(-50%, -50%);`;
+
+  const Input = styled.input`
+    max-width: 100%;
+`;
+
 
 const RegisterForm = ({ onLogin }) => {
+  
+
   const [formData, setFormData] = useState({
     email: "",
     name: "",
@@ -76,35 +116,20 @@ const RegisterForm = ({ onLogin }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+
+
   return (
-    <div
-      className='container  '
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <form
+    <Container>
+      <ContainerOverlay> 
+       <Form
         onSubmit={handleSubmit}
-        style={{
-          width: "80%",
-          height: "90%",
-          border: "2px solid #ffd700",
-          padding: "30px",
-          background: "white",
-          borderRadius: "30px",
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-        }}
+         
       >
         <div className='mb-3'>
           <label htmlFor='email' className='form-label'>
             Email Address
           </label>
-          <input
+          <Input
             type='email'
             id='email'
             name='email'
@@ -121,7 +146,7 @@ const RegisterForm = ({ onLogin }) => {
           <label htmlFor='name' className='form-label'>
             Name
           </label>
-          <input
+          <Input
             type='text'
             id='name'
             name='name'
@@ -136,7 +161,7 @@ const RegisterForm = ({ onLogin }) => {
           <label htmlFor='username' className='form-label'>
             Username
           </label>
-          <input
+          <Input
             type='text'
             id='username'
             name='username'
@@ -153,7 +178,7 @@ const RegisterForm = ({ onLogin }) => {
           <label htmlFor='password' className='form-label'>
             Password
           </label>
-          <input
+          <Input
             type='password'
             id='password'
             name='password'
@@ -170,7 +195,7 @@ const RegisterForm = ({ onLogin }) => {
           <label htmlFor='confirmPassword' className='form-label'>
             Confirm Password
           </label>
-          <input
+          <Input
             type='password'
             id='confirmPassword'
             name='confirmPassword'
@@ -186,9 +211,15 @@ const RegisterForm = ({ onLogin }) => {
         <button type='submit' className='btn search'>
           Register
         </button>
-      </form>
-    </div>
+      </Form>
+      </ContainerOverlay>  
+    </Container>
   );
 };
 
 export default RegisterForm;
+
+
+
+
+ 

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 import { useLanguage } from "../context/LanguageContext";
 
@@ -11,7 +11,7 @@ const Navbar = () => {
   return (
     <nav
       className='navbar navbar-expand-lg navbar-light'
-      style={{ backgroundColor: "#ffd700" }}
+      style={{ backgroundColor: "#ffd700",zIndex: "1000" }}
     >
       <div className='container'>
         <Link className='navbar-brand' to='/'>
@@ -60,17 +60,16 @@ const Navbar = () => {
               </div>
             </li>
 
-            <li className='nav-item'>
+            {/* <li className='nav-item'>
               <Link className='nav-link' to='/watchlist'>
                 <FontAwesomeIcon icon={faHeart} className='me-2' />
                 Watchlist
               </Link>
-            </li>
+            </li> */}
 
             <li className='nav-item'>
               <Link className='nav-link' to='/form'>
-                <FontAwesomeIcon icon={faHeart} className='me-2' />
-                Register
+                 Login
               </Link>
             </li>
 
