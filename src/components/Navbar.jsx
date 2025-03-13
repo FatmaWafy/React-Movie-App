@@ -67,6 +67,13 @@ const Navbar = () => {
               </Link>
             </li>
 
+            <li className='nav-item'>
+              <Link className='nav-link' to='/form'>
+                <FontAwesomeIcon icon={faHeart} className='me-2' />
+                Register
+              </Link>
+            </li>
+
             <li>
               <Link
                 to='/favorites'
